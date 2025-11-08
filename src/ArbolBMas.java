@@ -1,4 +1,4 @@
-import java.util.ArrayDeque;
+import java.util.ArrayDeque; 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Queue;
@@ -27,9 +27,13 @@ public class ArbolBMas {
     private NodoArbolBMas buscarHoja(int clave) {
         NodoArbolBMas x = raiz;
         while (!x.esHoja) {
-            int i = x.buscarPos(clave);
-            if (i < x.listaHijos.size()) x = x.listaHijos.get(i);
-            else x = x.listaHijos.get(x.listaHijos.size() - 1);
+            // contar cuantas claves del interno son <= clave
+            // para escoger el hijo i correcto (regla de B+ con separadora = minimo del hermano derecho)
+            int i = 0;
+            while (i < x.listaClaves.size() && clave >= x.listaClaves.get(i)) {
+                i++;
+            }
+            x = x.listaHijos.get(i);
         }
         return x;
     }
